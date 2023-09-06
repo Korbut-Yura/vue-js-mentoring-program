@@ -1,37 +1,85 @@
+<script lang="ts" setup>
+import Button from "../components/Button.vue";
+import TextInput from "../components/TextInput.vue";
+import ToggleButton from "../components/ToggleButton.vue";
+</script>
+
 <template>
   <header>
-    <div class="storybook-header">
-      <div>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" fill-rule="evenodd">
-            <path d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z" fill="#FFF" />
-            <path d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z" fill="#555AB9" />
-            <path d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z" fill="#91BAF8" />
-          </g>
-        </svg>
-        <h1>Acme</h1>
-      </div>
-      <div>
-        <span class="welcome" v-if="user">Welcome, <b>{{ user.name }}</b>!</span>
-        <my-button size="small" @click="$emit('logout')" label="Log out" v-if="user" />
-        <my-button size="small" @click="$emit('login')" label="Log in" v-if="!user" />
-        <my-button primary size="small" @click="$emit('createAccount')" label="Sign up" v-if="!user" />
+    <div class="bg-image"></div>
+    <div class="header">
+      <h1 class="logo"><b>netflix</b>roulette</h1>
+      <div class="content">
+        <h1 class="title">Find your movie</h1>
+        <div class="search">
+          <TextInput />
+          <Button label="Search" />
+        </div>
+        <ToggleButton
+          className="toggle"
+          :buttons="['Title', 'Gengre']"
+          label="search by"
+        />
       </div>
     </div>
   </header>
 </template>
 
-<script lang="ts" setup>
-import './header.css';
-import MyButton from './Button.vue';
-
-defineProps<{ user: { name: string } | null }>();
-
-defineEmits<{
-  (event: 'createAccount'): void;
-  (event: 'login'): void;
-  (event: 'logout'): void;
-}>();
-
-</script>
-
+<style scoped>
+.logo {
+  color: var(--primary);
+  font-size: 1.5rem;
+}
+b {
+  font-weight: bold;
+}
+header {
+  font-family: "Nunito Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  display: flex;
+  position: relative;
+}
+.bg-image {
+  background-image: url("../../src//assets/header.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(2px);
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.bg-image:before {
+  background-color: var(--color-background-blur);
+  content: "";
+  display: block;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+}
+.header {
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 16px 48px;
+}
+.title {
+  text-transform: uppercase;
+  letter-spacing: 0.3rem;
+}
+.content {
+  padding: 32px 48px;
+}
+.search {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  gap: 16px;
+  margin-top: 24px;
+}
+.toggle {
+  margin-top: 24px;
+}
+</style>
